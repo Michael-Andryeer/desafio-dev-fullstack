@@ -6,6 +6,7 @@ import {
   type LeadRepository,
   LeadWithRelations,
 } from '../repositories/lead.repository';
+import { NoFilesProvidedError } from '../../../shared/errors/no-files-provided.error';
 import { EmailAlreadyExistsError } from '../../../shared/errors/email-already-exists.error';
 import { UnitCodeAlreadyExistsError } from '../../../shared/errors/unit-code-already-exists.error';
 
@@ -25,6 +26,8 @@ export class CreateLeadUseCase {
   ) {}
 
   async execute(input: CreateLeadInput): Promise<LeadWithRelations> {
+    if (input.files.length === 0) throw new NoFilesProvidedError();
+
     const emailExists = await this.leadRepository.existsByEmail(input.email);
     if (emailExists) throw new EmailAlreadyExistsError(input.email);
 
