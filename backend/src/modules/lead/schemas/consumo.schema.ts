@@ -6,6 +6,7 @@ import {
   timestamp,
   unique,
 } from 'drizzle-orm/mysql-core';
+import { relations } from 'drizzle-orm';
 import { unidades } from './unidade.schema';
 
 export const consumos = mysqlTable(
@@ -24,3 +25,10 @@ export const consumos = mysqlTable(
   },
   (table) => [unique('uq_unidade_mes').on(table.unidadeId, table.mesDoConsumo)],
 );
+
+export const consumosRelations = relations(consumos, ({ one }) => ({
+  unidade: one(unidades, {
+    fields: [consumos.unidadeId],
+    references: [unidades.id],
+  }),
+}));

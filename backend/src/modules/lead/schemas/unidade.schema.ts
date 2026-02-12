@@ -6,7 +6,9 @@ import {
   date,
   timestamp,
 } from 'drizzle-orm/mysql-core';
+import { relations } from 'drizzle-orm';
 import { leads } from './lead.schema';
+import { consumos } from './consumo.schema';
 
 export const unidades = mysqlTable('unidades', {
   id: varchar('id', { length: 36 }).primaryKey(),
@@ -35,3 +37,11 @@ export const unidades = mysqlTable('unidades', {
     .defaultNow()
     .$onUpdate(() => new Date()),
 });
+
+export const unidadesRelations = relations(unidades, ({ one, many }) => ({
+  lead: one(leads, {
+    fields: [unidades.leadId],
+    references: [leads.id],
+  }),
+  consumos: many(consumos),
+}));

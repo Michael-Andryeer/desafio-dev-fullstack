@@ -1,4 +1,6 @@
 import { mysqlTable, timestamp, varchar } from 'drizzle-orm/mysql-core';
+import { relations } from 'drizzle-orm';
+import { unidades } from './unidade.schema';
 
 export const leads = mysqlTable('leads', {
   id: varchar('id', { length: 36 }).primaryKey(),
@@ -11,3 +13,7 @@ export const leads = mysqlTable('leads', {
     .defaultNow()
     .$onUpdate(() => new Date()),
 });
+
+export const leadsRelations = relations(leads, ({ many }) => ({
+  unidades: many(unidades),
+}));

@@ -1,3 +1,3 @@
-export { leads } from './lead.schema';
-export { unidades } from './unidade.schema';
-export { consumos } from './consumo.schema';
+export { leads, leadsRelations } from './lead.schema';
+export { unidades, unidadesRelations } from './unidade.schema';
+export { consumos, consumosRelations } from './consumo.schema';
