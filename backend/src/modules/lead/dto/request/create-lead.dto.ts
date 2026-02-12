@@ -1,7 +1,7 @@
 import { z } from 'zod/v4';
 
 export const createLeadSchema = z.object({
-  nomeCompleto: z.string().min(3, 'Nome deve ter pelo menos 3 caracateres'),
+  nomeCompleto: z.string().min(3, 'Nome deve ter pelo menos 3 caracteres'),
   email: z.string().email('Email inválido'),
   telefone: z
     .string()
@@ -9,4 +9,4 @@ export const createLeadSchema = z.object({
     .max(15, 'Telefone inválido'),
 });
 
-export type createLeadDto = z.infer<typeof createLeadSchema>;
+export type CreateLeadDto = z.infer<typeof createLeadSchema>;
