@@ -7,6 +7,10 @@ const envSchema = z.object({
   DATABASE_PASSWORD: z.string(),
   DATABASE_NAME: z.string(),
   PORT: z.coerce.number().default(3000),
+  MAGIC_PDF_API_URL: z
+    .string()
+    .url()
+    .default('https://magic-pdf.solarium.newsun.energy/v1/magic-pdf'),
 });
 
 export type Env = z.infer<typeof envSchema>;
