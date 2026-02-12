@@ -5,9 +5,11 @@ import { DrizzleLeadRepository } from './repositories/drizzle-lead.repository';
 import { CreateLeadUseCase } from './use-cases/create-lead.use-case';
 import { ListLeadsUseCase } from './use-cases/list-leads.use-case';
 import { GetLeadByIdUseCase } from './use-cases/get-lead-by-id.use-case';
+import { LeadController } from './lead.controller';
 
 @Module({
   imports: [MagicPdfModule],
+  controllers: [LeadController],
   providers: [
     {
       provide: LEAD_REPOSITORY,
