@@ -1,5 +1,5 @@
-import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
 import { useLeads } from "@/hooks/use-leads";
 import { LeadFilters } from "@/components/lead-filters";
 import { LeadTable } from "@/components/lead-table";
@@ -13,16 +13,17 @@ export const Route = createFileRoute("/listagem")({
 function ListagemPage() {
   const [filters, setFilters] = useState<LeadFiltersType>({});
   const [selectedLeadId, setSelectedLeadId] = useState<string | null>(null);
-  const { data: leads, isLoading } = useLeads(filters);
+
+  const { data: leads = [], isLoading } = useLeads(filters);
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold">Listagem de Simulacoes</h1>
+      <h1 className="text-2xl font-bold">Simulações Registradas</h1>
 
       <LeadFilters onFilterChange={setFilters} />
 
       <LeadTable
-        leads={leads ?? []}
+        leads={leads}
         isLoading={isLoading}
         onSelectLead={setSelectedLeadId}
       />
