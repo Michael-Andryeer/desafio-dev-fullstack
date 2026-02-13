@@ -1,15 +1,9 @@
+import type { Lead, LeadFilters } from "@/types/lead";
+
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
-interface LeadFilters {
-  nome?: string;
-  email?: string;
-  codigoDaUnidadeConsumidora?: string;
-  page?: number;
-  limit?: number;
-}
-
 export const api = {
-  async createLead(formData: FormData) {
+  async createLead(formData: FormData): Promise<Lead> {
     const response = await fetch(`${API_URL}/leads`, {
       method: "POST",
       body: formData,
@@ -23,7 +17,7 @@ export const api = {
     return response.json();
   },
 
-  async getLeads(filters?: LeadFilters) {
+  async getLeads(filters?: LeadFilters): Promise<Lead[]> {
     const params = new URLSearchParams();
 
     if (filters) {
@@ -45,7 +39,7 @@ export const api = {
     return response.json();
   },
 
-  async getLeadById(id: string) {
+  async getLeadById(id: string): Promise<Lead> {
     const response = await fetch(`${API_URL}/leads/${id}`);
 
     if (!response.ok) {
