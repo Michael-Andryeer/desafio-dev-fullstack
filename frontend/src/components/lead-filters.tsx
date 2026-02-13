@@ -1,28 +1,53 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import type { LeadFilters as LeadFiltersType } from "@/types/lead";
+import { filterStore } from "@/stores/filter-store";
 
 interface LeadFiltersProps {
   onFilterChange: (filters: LeadFiltersType) => void;
+  onDebouncingChange: (isDebouncing: boolean) => void;
 }
 
-export function LeadFilters({ onFilterChange }: LeadFiltersProps) {
-  const [nome, setNome] = useState("");
-  const [email, setEmail] = useState("");
-  const [codigoUC, setCodigoUC] = useState("");
+export function LeadFilters({
+  onFilterChange,
+  onDebouncingChange,
+}: LeadFiltersProps) {
+  const stored = filterStore.get();
+  const [nome, setNome] = useState(stored.nome);
+  const [email, setEmail] = useState(stored.email);
+  const [codigoUC, setCodigoUC] = useState(stored.codigoUC);
+  const isFirstRender = useRef(true);
 
   useEffect(() => {
-    const timeout = setTimeout(() => {
+    filterStore.set({ nome, email, codigoUC });
+
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
       onFilterChange({
         nome: nome || undefined,
         email: email || undefined,
         codigoDaUnidadeConsumidora: codigoUC || undefined,
       });
-    }, 300);
+      return;
+    }
 
-    return () => clearTimeout(timeout);
+    onDebouncingChange(true);
+
+    const timeout = setTimeout(() => {
+      onDebouncingChange(false);
+      onFilterChange({
+        nome: nome || undefined,
+        email: email || undefined,
+        codigoDaUnidadeConsumidora: codigoUC || undefined,
+      });
+    }, 800);
+
+    return () => {
+      clearTimeout(timeout);
+      onDebouncingChange(false);
+    };
   }, [nome, email, codigoUC]);
 
   const handleClear = () => {

@@ -13,18 +13,24 @@ export const Route = createFileRoute("/listagem")({
 function ListagemPage() {
   const [filters, setFilters] = useState<LeadFiltersType>({});
   const [selectedLeadId, setSelectedLeadId] = useState<string | null>(null);
+  const [isDebouncing, setIsDebouncing] = useState(false);
 
-  const { data: leads = [], isLoading } = useLeads(filters);
+  const { data: leads = [], isLoading, isFetching } = useLeads(filters);
+
+  const showLoading = isLoading || isFetching || isDebouncing;
 
   return (
     <div className="space-y-6">
       <h1 className="text-2xl font-bold">Simulações Registradas</h1>
 
-      <LeadFilters onFilterChange={setFilters} />
+      <LeadFilters
+        onFilterChange={setFilters}
+        onDebouncingChange={setIsDebouncing}
+      />
 
       <LeadTable
         leads={leads}
-        isLoading={isLoading}
+        isLoading={showLoading}
         onSelectLead={setSelectedLeadId}
       />
 
