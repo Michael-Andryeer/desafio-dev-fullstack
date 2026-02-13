@@ -1,4 +1,4 @@
-import { api } from "./../src/services/api";
+import { api } from "../services/api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "@tanstack/react-router";
 import { toast } from "sonner";
