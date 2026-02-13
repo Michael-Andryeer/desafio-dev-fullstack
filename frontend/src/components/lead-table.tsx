@@ -45,6 +45,7 @@ export function LeadTable({ leads, isLoading, onSelectLead }: LeadTableProps) {
           <TableHead>Nome</TableHead>
           <TableHead>Email</TableHead>
           <TableHead>Telefone</TableHead>
+          <TableHead>Codigo UC</TableHead>
           <TableHead className="text-center">Unidades</TableHead>
           <TableHead>Data</TableHead>
         </TableRow>
@@ -59,6 +60,11 @@ export function LeadTable({ leads, isLoading, onSelectLead }: LeadTableProps) {
             <TableCell className="font-medium">{lead.nomeCompleto}</TableCell>
             <TableCell>{lead.email}</TableCell>
             <TableCell>{lead.telefone}</TableCell>
+            <TableCell>
+              {lead.unidades
+                .map((u) => u.codigoDaUnidadeConsumidora)
+                .join(", ")}
+            </TableCell>
             <TableCell className="text-center">
               {lead.unidades.length}
             </TableCell>
