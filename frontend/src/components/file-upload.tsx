@@ -63,9 +63,7 @@ export function FileUpload({ value, onChange, error }: FileUploadProps) {
   } ${error ? "border-destructive" : ""}`}
       >
         <Upload className="mb-2 h-8 w-8 text-muted-foreground" />
-        <p className="text-sm font-medium">
-          Arraste contas de energia aqui ou clique para selecionar
-        </p>
+        <p className="text-sm font-medium">clique para selecionar</p>
         <p className="mt-1 text-xs text-muted-foreground">Apenas PDF</p>
         <input
           ref={inputRef}
