@@ -14,6 +14,7 @@ import {
   ApiOperation,
   ApiResponse,
   ApiConsumes,
+  ApiBody,
 } from '@nestjs/swagger';
 import { CreateLeadUseCase } from './use-cases/create-lead.use-case';
 import { ListLeadsUseCase } from './use-cases/list-leads.use-case';
@@ -34,6 +35,34 @@ export class LeadController {
   @Post()
   @ApiOperation({ summary: 'Registrar uma nova simulação de compensação' })
   @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    schema: {
+      type: 'object',
+      required: ['nomeCompleto', 'email', 'telefone', 'files'],
+      properties: {
+        nomeCompleto: {
+          type: 'string',
+          example: 'João da Silva',
+          description: 'Nome completo (mínimo 3 caracteres)',
+        },
+        email: {
+          type: 'string',
+          example: 'joao@email.com',
+          description: 'Email válido',
+        },
+        telefone: {
+          type: 'string',
+          example: '11999999999',
+          description: 'Telefone (10-15 caracteres)',
+        },
+        files: {
+          type: 'array',
+          items: { type: 'string', format: 'binary' },
+          description: 'Arquivos de conta de luz (PDF)',
+        },
+      },
+    },
+  })
   @ApiResponse({ status: 201, description: 'Lead criado com sucesso' })
   @ApiResponse({ status: 400, description: 'Dados inválidos' })
   @ApiResponse({ status: 409, description: 'Email ou código UC já cadastrado' })
