@@ -1,4 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { SimulationForm } from "@/components/simulation-form";
 
 export const Route = createFileRoute("/simular")({
   component: SimularPage,
@@ -6,11 +14,19 @@ export const Route = createFileRoute("/simular")({
 
 function SimularPage() {
   return (
-    <div>
-      <h1 className="text-2xl font-bold">Simulação de Compensação</h1>
-      <p className="mt-2 text-muted-foreground">
-        Formulário será implementado na Fase 7.
-      </p>
+    <div className="mx-auto max-w-2xl">
+      <Card>
+        <CardHeader>
+          <CardTitle>Simulação de Compensação Energética</CardTitle>
+          <CardDescription>
+            Preencha seus dados e envie suas contas de energia em PDF para
+            simular a compensação.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <SimulationForm />
+        </CardContent>
+      </Card>
     </div>
   );
 }
